@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AfterDark Society</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r152/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+<style>
+:root{--glass:rgba(20,20,24,.45);--stroke:rgba(255,255,255,.14)}
+*{box-sizing:border-box}
+body{margin:0;overflow:hidden;background:#000;color:#fff;font-family:Inter}
+
+#overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#000;z-index:10;cursor:pointer;font-family:Orbitron;letter-spacing:2px}
+
+video{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.35)}
+.noise{position:fixed;inset:0;pointer-events:none;background-image:url('https://grainy-gradients.vercel.app/noise.svg');opacity:.08}
+
+.topbar{position:fixed;top:16px;left:16px;z-index:5}
+.volume{display:flex;gap:8px;align-items:center;background:var(--glass);backdrop-filter:blur(18px);padding:8px 12px;border-radius:14px;border:1px solid var(--stroke)}
+
+/* MAIN GLASS CONTAINER */
+.container{
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+  padding:22px;
+  border-radius:22px;
+  background:rgba(20,20,24,.35);
+  backdrop-filter:blur(30px);
+  border:1px solid rgba(255,255,255,.1);
+  box-shadow:0 30px 120px rgba(0,0,0,.6), 0 0 80px rgba(255,0,0,.15);
+}
+
+/* PROFILE CARD */
+.card{
+  display:flex;
+  gap:18px;
+  align-items:center;
+  padding:16px 18px;
+  border-radius:16px;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.08);
+  transition:.2s;
+}
+.card:hover{transform:scale(1.03)}
+.avatar{width:72px;height:72px;border-radius:50%;object-fit:cover}
+.title{font-family:Orbitron;font-size:22px}
+.sub{opacity:.6}
+.loc{opacity:.5;font-size:13px}
+.join{padding:6px 14px;border-radius:14px;background:#22c55e;color:#fff;text-decoration:none;font-size:14px}
+
+/* SERVER CARD */
+.server{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  padding:14px 16px;
+  border-radius:14px;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.08);
+}
+.server img{width:40px;height:40px;border-radius:10px}
+
+canvas{position:fixed;inset:0;pointer-events:none}
+</style>
+</head>
+<body>
+
+<div id="overlay">CLICK TO ENTER</div>
+
+<video id="bg" loop muted playsinline>
+  <source src="video.mp4" type="video/mp4" />
+</video>
+<div class="noise"></div>
+
+<audio id="music" loop>
+  <source src="song.mp3" type="audio/mp3" />
+</audio>
+
+<div class="topbar">
+  <div class="volume">🔊 <input id="vol" type="range" min="0" max="1" step="0.01" value="0.6" /></div>
+</div>
+
+<div class="container" id="cardWrap">
+
+  <div class="card" id="card">
+    <img src="profile.jpeg" class="avatar" />
+    <div>
+      <div class="title">Anshhh</div>
+      <div class="sub">Developer , Event Manager</div>
+      <div class="loc">📍 Bhilai</div>
+      <div style="display:flex;gap:10px;margin-top:8px">
+        <a href="https://instagram.com/anshhhyrrr" target="_blank" style="display:flex;align-items:center;gap:6px;text-decoration:none;color:white;font-size:14px;opacity:.8">
+          <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="18" /> Instagram
+        </a>
+        <a href="https://github.com/shreyy-gims" target="_blank" style="display:flex;align-items:center;gap:6px;text-decoration:none;color:white;font-size:14px;opacity:.8">
+          <img src="https://cdn-icons-png.flaticon.com/512/733/733553.png" width="18" /> GitHub
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="server">
+    <img src="server.png" />
+    <div>
+      <div>afterdark society</div>
+      <div style="opacity:.6;font-size:13px">Online • Private server</div>
+    </div>
+    <a class="join" href="https://discord.gg/YOURCODE" target="_blank">Join</a>
+  </div>
+
+</div>
+
+<canvas id="c"></canvas>
+
+<script>
+const overlay=document.getElementById('overlay');
+const music=document.getElementById('music');
+const video=document.getElementById('bg');
+const wrap=document.getElementById('cardWrap');
+const vol=document.getElementById('vol');
+
+// start
+overlay.onclick=()=>{
+  overlay.style.display='none';
+  video.play();
+  music.volume=parseFloat(vol.value);
+  music.play();
+  gsap.from('.container',{opacity:0,scale:.9,duration:1,ease:'power3.out'});
+}
+
+vol.oninput=()=>music.volume=parseFloat(vol.value)
+
+// smooth 3D tilt on whole container
+addEventListener('mousemove',(e)=>{
+  let x=(innerWidth/2-e.clientX)/40;
+  let y=(innerHeight/2-e.clientY)/40;
+  wrap.style.transform=`translate(-50%,-50%) rotateY(${x}deg) rotateX(${y}deg)`;
+})
+
+// particles
+const canvas=document.getElementById('c');
+const ctx=canvas.getContext('2d');
+canvas.width=innerWidth;canvas.height=innerHeight;
+let pts=[];
+addEventListener('mousemove',(e)=>{
+  pts.push({x:e.clientX,y:e.clientY,s:Math.random()*3+1,l:70});
+});
+(function draw(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  pts.forEach((p,i)=>{
+    ctx.beginPath();ctx.arc(p.x,p.y,p.s,0,Math.PI*2);
+    ctx.fillStyle=`rgba(255,255,255,${p.l/80})`;ctx.fill();
+    p.y-=0.5;p.l--;if(p.l<=0) pts.splice(i,1);
+  });
+  requestAnimationFrame(draw);
+})();
+</script>
+
+</body>
+</html>
