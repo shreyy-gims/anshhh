@@ -2,513 +2,455 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-<title>Anshhh</title>
+<title>Anshh | AfterDark Society</title>
 
-<link
-  href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter:wght@400;600;700&display=swap"
-  rel="stylesheet"
-/>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
 <style>
 
 *{
- margin:0;
- padding:0;
- box-sizing:border-box;
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
 }
 
 body{
- background:#000;
- color:#fff;
- overflow:hidden;
- font-family:Inter,sans-serif;
+  background:#050505;
+  color:white;
+  font-family:Inter,sans-serif;
+  overflow:hidden;
 }
 
-/* VIDEO */
+/* ===== VIDEO ===== */
 
 video{
- position:fixed;
- inset:0;
- width:100%;
- height:100%;
- object-fit:cover;
- filter:brightness(.45);
- z-index:-3;
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  filter:brightness(.35) saturate(1.1);
 }
 
-/* OVERLAY */
+/* ===== DARK OVERLAY ===== */
+
+.bg-overlay{
+  position:fixed;
+  inset:0;
+  background:
+  radial-gradient(circle at top,#7c3aed22,transparent 45%),
+  radial-gradient(circle at bottom,#2563eb22,transparent 45%),
+  rgba(0,0,0,.55);
+  z-index:1;
+}
+
+/* ===== ENTER SCREEN ===== */
 
 #overlay{
- position:fixed;
- inset:0;
- display:flex;
- flex-direction:column;
- align-items:center;
- justify-content:center;
- background:#000;
- z-index:999;
- cursor:pointer;
+  position:fixed;
+  inset:0;
+  background:#000;
+  z-index:20;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  cursor:pointer;
 }
 
 #overlay h1{
- font-family:Orbitron;
- font-size:30px;
- letter-spacing:5px;
- margin-bottom:10px;
+  font-family:Orbitron;
+  font-size:28px;
+  letter-spacing:4px;
+  margin-bottom:10px;
+
+  background:linear-gradient(90deg,#fff,#8b5cf6,#3b82f6);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
 }
 
 #overlay p{
- opacity:.55;
- font-size:12px;
- letter-spacing:3px;
- text-transform:uppercase;
+  opacity:.65;
+  font-size:13px;
+  letter-spacing:2px;
 }
 
-/* GLOW */
-
-.glow{
- position:fixed;
- width:300px;
- height:300px;
- border-radius:50%;
- background:radial-gradient(
-  circle,
-  rgba(168,85,247,.22),
-  rgba(59,130,246,.08),
-  transparent 70%
- );
- pointer-events:none;
- z-index:-1;
- filter:blur(30px);
- transition:transform .1s linear;
-}
-
-/* CONTAINER */
+/* ===== MAIN CARD ===== */
 
 .container{
- position:absolute;
- top:50%;
- left:50%;
- transform:translate(-50%,-50%);
- width:92%;
- max-width:390px;
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:92%;
+  max-width:390px;
+  z-index:5;
 
- padding:18px;
+  padding:18px;
 
- border-radius:28px;
+  border-radius:28px;
 
- background:rgba(20,20,25,.28);
+  backdrop-filter:blur(24px);
 
- backdrop-filter:blur(30px);
+  background:rgba(16,16,20,.45);
 
- border:1px solid rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.08);
 
- box-shadow:
- 0 20px 80px rgba(0,0,0,.65),
- 0 0 40px rgba(139,92,246,.15);
-
- overflow:hidden;
+  box-shadow:
+  0 0 40px rgba(0,0,0,.55),
+  inset 0 0 30px rgba(255,255,255,.03);
 }
 
-/* ANIMATED BORDER */
+/* ===== PROFILE ===== */
 
-.container::before{
- content:'';
- position:absolute;
- inset:0;
- border-radius:28px;
- padding:1px;
+.card{
+  display:flex;
+  gap:14px;
 
- background:linear-gradient(
- 135deg,
- #7c3aed,
- #06b6d4,
- #ec4899
- );
+  padding:16px;
 
- -webkit-mask:
- linear-gradient(#fff 0 0) content-box,
- linear-gradient(#fff 0 0);
+  border-radius:22px;
 
- -webkit-mask-composite:xor;
- mask-composite:exclude;
+  background:rgba(255,255,255,.04);
 
- animation:borderGlow 6s linear infinite;
- pointer-events:none;
+  border:1px solid rgba(255,255,255,.05);
+
+  margin-bottom:14px;
 }
-
-@keyframes borderGlow{
- 0%{
-  filter:hue-rotate(0deg);
- }
- 100%{
-  filter:hue-rotate(360deg);
- }
-}
-
-/* CARD */
-
-.card,
-.server{
- position:relative;
- display:flex;
- gap:14px;
- align-items:center;
-
- padding:14px;
- margin-bottom:12px;
-
- border-radius:18px;
-
- background:rgba(255,255,255,.04);
-
- border:1px solid rgba(255,255,255,.08);
-
- transition:.35s ease;
- overflow:hidden;
-}
-
-.card:hover,
-.server:hover{
- transform:translateY(-4px);
- box-shadow:0 10px 40px rgba(139,92,246,.18);
- border:1px solid rgba(139,92,246,.35);
-}
-
-/* AVATAR */
 
 .avatar{
- width:62px;
- height:62px;
- border-radius:50%;
- object-fit:cover;
- border:2px solid rgba(255,255,255,.15);
+  width:68px;
+  height:68px;
+  border-radius:50%;
+  object-fit:cover;
+
+  border:2px solid rgba(139,92,246,.55);
+
+  box-shadow:
+  0 0 25px rgba(139,92,246,.4);
 }
 
-/* TEXT */
-
 .title{
- font-family:Orbitron;
- font-size:18px;
- font-weight:700;
- letter-spacing:1px;
+  font-family:Orbitron;
+  font-size:20px;
+  font-weight:700;
+
+  background:linear-gradient(90deg,#ffffff,#c4b5fd,#93c5fd);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
 }
 
 .sub{
- opacity:.72;
- font-size:12px;
- margin-top:2px;
+  opacity:.75;
+  font-size:13px;
+  margin-top:4px;
 }
 
 .loc{
- opacity:.45;
- font-size:11px;
- margin-top:4px;
+  opacity:.55;
+  font-size:11px;
+  margin-top:5px;
+  letter-spacing:1px;
 }
 
-/* STATUS */
-
-.status{
- display:flex;
- align-items:center;
- gap:6px;
- margin-top:8px;
- font-size:11px;
- opacity:.75;
-}
-
-.status span{
- width:8px;
- height:8px;
- border-radius:50%;
- background:#22c55e;
- box-shadow:0 0 10px #22c55e;
-}
-
-/* LINKS */
+/* ===== SOCIALS ===== */
 
 .links{
- display:flex;
- gap:12px;
- margin-top:10px;
- flex-wrap:wrap;
+  display:flex;
+  gap:10px;
+  margin-top:12px;
+  flex-wrap:wrap;
 }
 
 .links a{
- display:flex;
- align-items:center;
- gap:6px;
+  display:flex;
+  align-items:center;
+  gap:6px;
 
- color:#fff;
- text-decoration:none;
+  text-decoration:none;
+  color:white;
 
- font-size:12px;
- opacity:.85;
+  padding:8px 12px;
 
- transition:.3s ease;
+  border-radius:14px;
+
+  background:rgba(255,255,255,.05);
+
+  border:1px solid rgba(255,255,255,.06);
+
+  transition:.3s;
+
+  font-size:12px;
 }
 
 .links a:hover{
- opacity:1;
- transform:translateY(-2px);
+  transform:translateY(-3px);
+  background:rgba(255,255,255,.1);
+  box-shadow:0 0 18px rgba(255,255,255,.12);
 }
 
 .links img{
- width:16px;
+  width:15px;
 }
 
-/* SERVER */
+/* ===== SERVER CARD ===== */
+
+.server{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  gap:14px;
+
+  padding:16px;
+
+  border-radius:22px;
+
+  background:rgba(255,255,255,.04);
+
+  border:1px solid rgba(255,255,255,.05);
+}
+
+.server-left{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
 
 .server img{
- width:42px;
- height:42px;
- border-radius:12px;
- object-fit:cover;
+  width:48px;
+  height:48px;
+  border-radius:14px;
+  object-fit:cover;
+
+  border:1px solid rgba(255,255,255,.08);
 }
 
-/* JOIN BUTTON */
+.server-title{
+  font-weight:600;
+  font-size:15px;
+}
+
+.server-sub{
+  opacity:.6;
+  font-size:12px;
+  margin-top:2px;
+}
+
+/* ===== JOIN BUTTON ===== */
 
 .join{
- position:relative;
- overflow:hidden;
- margin-left:auto;
+  position:relative;
 
- padding:10px 18px;
+  text-decoration:none;
+  color:white;
 
- border-radius:16px;
+  font-size:13px;
+  font-weight:600;
 
- background:linear-gradient(
- 135deg,
- #7c3aed,
- #06b6d4
- );
+  padding:12px 18px;
 
- color:#fff;
- text-decoration:none;
+  border-radius:16px;
 
- font-size:12px;
- font-weight:700;
- letter-spacing:.6px;
+  overflow:hidden;
 
- border:1px solid rgba(255,255,255,.15);
+  background:linear-gradient(135deg,#7c3aed,#2563eb);
 
- box-shadow:
- 0 0 20px rgba(124,58,237,.35),
- 0 0 40px rgba(6,182,212,.15);
+  transition:.35s;
 
- transition:.35s ease;
-}
-
-.join:hover{
- transform:translateY(-2px) scale(1.04);
-
- box-shadow:
- 0 0 30px rgba(124,58,237,.5),
- 0 0 60px rgba(6,182,212,.25);
+  box-shadow:
+  0 0 25px rgba(99,102,241,.35);
 }
 
 .join::before{
- content:'';
+  content:'';
+  position:absolute;
+  top:0;
+  left:-120%;
+  width:100%;
+  height:100%;
 
- position:absolute;
- top:0;
- left:-120%;
+  background:linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,.4),
+    transparent
+  );
 
- width:80%;
- height:100%;
-
- background:linear-gradient(
- 90deg,
- transparent,
- rgba(255,255,255,.35),
- transparent
- );
-
- transform:skewX(-20deg);
- transition:.7s;
+  transition:.6s;
 }
 
 .join:hover::before{
- left:140%;
+  left:120%;
 }
 
-/* VISUALIZER */
+.join:hover{
+  transform:translateY(-3px) scale(1.03);
 
-.visualizer{
- display:flex;
- gap:4px;
- margin-top:10px;
+  box-shadow:
+  0 0 35px rgba(99,102,241,.6);
 }
 
-.visualizer span{
- width:4px;
- height:20px;
- border-radius:10px;
- background:#fff;
- animation:bounce 1s infinite ease-in-out;
+/* ===== GLOW ===== */
+
+.glow{
+  position:fixed;
+  width:320px;
+  height:320px;
+
+  border-radius:50%;
+
+  background:
+  radial-gradient(circle,
+  rgba(124,58,237,.22),
+  transparent 70%);
+
+  pointer-events:none;
+
+  filter:blur(35px);
+
+  z-index:0;
 }
 
-.visualizer span:nth-child(2){
- animation-delay:.2s;
-}
-
-.visualizer span:nth-child(3){
- animation-delay:.4s;
-}
-
-.visualizer span:nth-child(4){
- animation-delay:.6s;
-}
-
-@keyframes bounce{
- 0%,100%{
-  transform:scaleY(.4);
- }
- 50%{
-  transform:scaleY(1.4);
- }
-}
-
-/* PARTICLES */
+/* ===== PARTICLES ===== */
 
 canvas{
- position:fixed;
- inset:0;
- pointer-events:none;
- z-index:-1;
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:2;
 }
 
-/* MOBILE */
+/* ===== MOBILE ===== */
 
-@media(max-width:480px){
+@media(max-width:500px){
 
- .container{
-  width:94%;
- }
+  .container{
+    width:94%;
+    padding:14px;
+  }
 
- .title{
-  font-size:16px;
- }
+  .card{
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+  }
+
+  .links{
+    justify-content:center;
+  }
+
+  .server{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .join{
+    width:100%;
+    text-align:center;
+  }
 
 }
 
 </style>
 </head>
-
 <body>
 
-<!-- OVERLAY -->
+<!-- ENTER SCREEN -->
 
 <div id="overlay">
- <h1>ANSHHH</h1>
- <p>tap to enter</p>
+  <h1>ANSHHH</h1>
+  <p>TAP TO ENTER</p>
 </div>
 
-<!-- VIDEO -->
+<!-- BACKGROUND VIDEO -->
 
-<video id="bg" loop muted playsinline>
- <source src="video.mp4" type="video/mp4">
+<video id="bg" autoplay muted loop playsinline>
+  <source src="video.mp4" type="video/mp4">
 </video>
 
-<!-- MUSIC -->
+<div class="bg-overlay"></div>
 
-<audio id="music" loop>
- <source src="song.mp3" type="audio/mp3">
-</audio>
+<!-- MAIN -->
+
+<div class="container" id="wrap">
+
+  <!-- PROFILE -->
+
+  <div class="card">
+
+    <img src="profile.jpeg" class="avatar">
+
+    <div>
+
+      <div class="title">Anshh</div>
+
+      <div class="sub">
+        Developer • Event Manager
+      </div>
+
+      <div class="loc">
+        📍 Bhilai, India
+      </div>
+
+      <div class="links">
+
+        <a href="https://www.instagram.com/anshhhyrrrr?igsh=dmg1ZzZtMWxkeGow" target="_blank">
+          <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png">
+          Instagram
+        </a>
+
+        <a href="https://github.com/shreyy-gims" target="_blank">
+          <img src="https://cdn-icons-png.flaticon.com/512/733/733553.png">
+          GitHub
+        </a>
+
+        <a href="https://open.spotify.com/user/317fetkkltqoeycuqqxt5tlsx4wu?si=BksPV-J8QECOL4-LcfS-WQ" target="_blank">
+          <img src="https://cdn-icons-png.flaticon.com/512/174/174872.png">
+          Spotify
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- SERVER -->
+
+  <div class="server">
+
+    <div class="server-left">
+
+      <img src="server.png">
+
+      <div>
+        <div class="server-title">
+          AfterDark Society
+        </div>
+
+        <div class="server-sub">
+          Private Community
+        </div>
+      </div>
+
+    </div>
+
+    <a class="join" href="https://discord.gg/xFxQqzUY" target="_blank">
+      JOIN
+    </a>
+
+  </div>
+
+</div>
 
 <!-- GLOW -->
 
 <div class="glow" id="glow"></div>
-
-<!-- MAIN -->
-
-<div class="container">
-
- <!-- PROFILE -->
-
- <div class="card">
-
-  <img src="profile.jpeg" class="avatar">
-
-  <div>
-
-   <div class="title" id="typing"></div>
-
-   <div class="sub">
-    Developer • Event Manager
-   </div>
-
-   <div class="loc">
-    📍 Bhilai
-   </div>
-
-   <div class="status">
-    <span></span>
-    Online
-   </div>
-
-   <div class="visualizer">
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-   </div>
-
-   <div class="links">
-
-    <a href="https://www.instagram.com/anshhhyrrrr?igsh=dmg1ZzZtMWxkeGow">
-      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png">
-      Insta
-    </a>
-
-    <a href="https://github.com/shreyy-gims">
-      <img src="https://cdn-icons-png.flaticon.com/512/733/733553.png">
-      GitHub
-    </a>
-
-    <a href="https://open.spotify.com/user/317fetkkltqoeycuqqxt5tlsx4wu?si=BksPV-J8QECOL4-LcfS-WQ">
-      <img src="https://cdn-icons-png.flaticon.com/512/174/174872.png">
-      Spotify
-    </a>
-
-   </div>
-
-  </div>
-
- </div>
-
- <!-- SERVER -->
-
- <div class="server">
-
-  <img src="server.png">
-
-  <div>
-
-   <div class="title" style="font-size:14px">
-    afterdark society
-   </div>
-
-   <div class="sub">
-    Private server
-   </div>
-
-  </div>
-
-  <a class="join" href="https://discord.gg/xFxQqzUY">
-    JOIN
-  </a>
-
- </div>
-
-</div>
 
 <!-- PARTICLES -->
 
@@ -516,135 +458,96 @@ canvas{
 
 <script>
 
-/* ELEMENTS */
+/* ===== ENTER ===== */
 
 const overlay = document.getElementById('overlay');
-const music = document.getElementById('music');
-const video = document.getElementById('bg');
-const glow = document.getElementById('glow');
-
-/* TYPING EFFECT */
-
-const text = "ANSHHH";
-let i = 0;
-
-function type(){
- if(i < text.length){
-  document.getElementById('typing').innerHTML += text.charAt(i);
-  i++;
-  setTimeout(type,120);
- }
-}
-
-type();
-
-/* ENTER */
 
 overlay.onclick = () => {
 
- navigator.vibrate?.(30);
+  gsap.to('#overlay',{
+    opacity:0,
+    duration:.7,
+    onComplete:()=>{
+      overlay.style.display='none';
+    }
+  });
 
- gsap.to('#overlay',{
-  opacity:0,
-  duration:1,
-  onComplete(){
-   overlay.style.display='none';
-  }
- });
+  gsap.from('.container',{
+    opacity:0,
+    y:40,
+    duration:1.2,
+    ease:'power3.out'
+  });
 
- video.play();
+};
 
- music.volume = 0.6;
+/* ===== GLOW FOLLOW ===== */
 
- music.play();
+const glow = document.getElementById('glow');
 
- gsap.from('.container',{
-  opacity:0,
-  y:40,
-  duration:1.2,
-  ease:'power3.out'
- });
-
-}
-
-/* GLOW FOLLOW */
-
-addEventListener('mousemove',e=>{
-
- glow.style.transform =
- `translate(${e.clientX-150}px,${e.clientY-150}px)`;
-
+window.addEventListener('mousemove',e=>{
+  glow.style.left = e.clientX - 160 + 'px';
+  glow.style.top = e.clientY - 160 + 'px';
 });
 
-/* PARTICLES */
+window.addEventListener('touchmove',e=>{
+  let t = e.touches[0];
+
+  glow.style.left = t.clientX - 160 + 'px';
+  glow.style.top = t.clientY - 160 + 'px';
+});
+
+/* ===== PARTICLES ===== */
 
 const canvas = document.getElementById('c');
 const ctx = canvas.getContext('2d');
 
-canvas.width = innerWidth;
-canvas.height = innerHeight;
+function resize(){
+  canvas.width = innerWidth;
+  canvas.height = innerHeight;
+}
 
-let pts = [];
+resize();
 
-addEventListener('mousemove',e=>{
+window.addEventListener('resize',resize);
 
- pts.push({
-  x:e.clientX,
-  y:e.clientY,
-  l:40
- });
+let particles = [];
+
+window.addEventListener('mousemove',e=>{
+
+  particles.push({
+    x:e.clientX,
+    y:e.clientY,
+    life:35
+  });
 
 });
 
-function draw(){
+function animate(){
 
- ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.clearRect(0,0,canvas.width,canvas.height);
 
- pts.forEach((p,i)=>{
+  particles.forEach((p,i)=>{
 
-  ctx.beginPath();
+    ctx.fillStyle=`rgba(255,255,255,${p.life/35})`;
 
-  ctx.fillStyle =
-  `rgba(255,255,255,${p.l/40})`;
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,1.6,0,Math.PI*2);
+    ctx.fill();
 
-  ctx.arc(p.x,p.y,2,0,Math.PI*2);
+    p.life--;
 
-  ctx.fill();
+    if(p.life<=0){
+      particles.splice(i,1);
+    }
 
-  p.l--;
+  });
 
-  if(p.l<=0){
-   pts.splice(i,1);
-  }
-
- });
-
- requestAnimationFrame(draw);
+  requestAnimationFrame(animate);
 
 }
 
-draw();
-
-/* RESIZE */
-
-addEventListener('resize',()=>{
-
- canvas.width = innerWidth;
- canvas.height = innerHeight;
-
-});
-
-/* MUSIC EFFECT */
-
-music.onpause = () => {
- document.querySelector('.container')
- .style.filter='blur(2px)';
-}
-
-music.onplay = () => {
- document.querySelector('.container')
- .style.filter='blur(0px)';
-}
+animate();
 
 </script>
 
