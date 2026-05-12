@@ -1,622 +1,696 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8" />
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-/>
-
-<title>Anshhh</title>
-
-<link
-  href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter:wght@400;500;600&display=swap"
-  rel="stylesheet"
-/>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-
-<style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
-
-html,body{
-  width:100%;
-  height:100%;
-  overflow:hidden;
-  font-family:Inter,sans-serif;
-  background:#000;
-  color:#fff;
-}
-
-/* VIDEO */
-
-video{
-  position:fixed;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  filter:brightness(.38);
-  z-index:-3;
-}
-
-/* DARK OVERLAY */
-
-.bg-overlay{
-  position:fixed;
-  inset:0;
-  background:
-  radial-gradient(circle at top,#ffffff10 0%,transparent 35%),
-  linear-gradient(to bottom,#00000055,#000000cc);
-  z-index:-2;
-}
-
-/* ENTRY SCREEN */
-
-#overlay{
-  position:fixed;
-  inset:0;
-  background:#000;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  z-index:999;
-  cursor:pointer;
-}
-
-#overlay h1{
-  font-family:Orbitron;
-  font-size:28px;
-  letter-spacing:6px;
-  margin-bottom:12px;
-  color:#fff;
-}
-
-#overlay p{
-  font-size:12px;
-  letter-spacing:3px;
-  opacity:.65;
-  text-transform:uppercase;
-}
-
-/* MAIN CARD */
-
-.container{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  width:92%;
-  max-width:390px;
-  padding:18px;
-
-  border-radius:30px;
-
-  background:rgba(15,15,18,.42);
-
-  backdrop-filter:blur(22px);
-  -webkit-backdrop-filter:blur(22px);
-
-  border:1px solid rgba(255,255,255,.08);
+  <meta charset="UTF-8" />
+
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <title>Anshhh</title>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet" />
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: Inter, sans-serif;
+      background: #000;
+      color: #fff;
+    }
+
+    /* VIDEO */
+
+    video {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(.38);
+      z-index: -5;
+    }
+
+    /* DARK LAYER */
+
+    .bg-overlay {
+      position: fixed;
+      inset: 0;
+
+      background:
+        radial-gradient(circle at top,
+          rgba(255, 255, 255, 0.08),
+          transparent 35%),
+        linear-gradient(to bottom,
+          rgba(0, 0, 0, .2),
+          rgba(0, 0, 0, .75));
+
+      z-index: -4;
+    }
+
+    /* ENTRY SCREEN */
+
+    #overlay {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+      cursor: pointer;
+      transition: .5s;
+    }
+
+    #overlay h1 {
+      font-family: Orbitron;
+      font-size: 30px;
+      letter-spacing: 7px;
+      margin-bottom: 12px;
+      color: #fff;
+    }
+
+    #overlay p {
+      font-size: 12px;
+      letter-spacing: 4px;
+      opacity: .6;
+      text-transform: uppercase;
+    }
+
+    /* MAIN CARD */
+
+    .container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+
+      width: 92%;
+      max-width: 390px;
+
+      padding: 18px;
 
-  box-shadow:
-  0 0 30px rgba(255,255,255,.05),
-  0 20px 80px rgba(0,0,0,.65);
+      border-radius: 30px;
 
-  overflow:hidden;
-}
+      background: rgba(12, 12, 15, .38);
 
-/* GLOW BORDER */
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
 
-.container::before{
-  content:'';
-  position:absolute;
-  inset:0;
-  padding:1px;
-  border-radius:30px;
+      border: 1px solid rgba(255, 255, 255, .08);
 
-  background:
-  linear-gradient(
-    135deg,
-    rgba(255,255,255,.18),
-    rgba(255,255,255,.02),
-    rgba(255,255,255,.12)
-  );
+      box-shadow:
+        0 0 30px rgba(255, 255, 255, .04),
+        0 20px 80px rgba(0, 0, 0, .7);
 
-  -webkit-mask:
-  linear-gradient(#fff 0 0) content-box,
-  linear-gradient(#fff 0 0);
+      overflow: hidden;
+    }
 
-  -webkit-mask-composite:xor;
-  mask-composite:exclude;
+    /* GLOW BORDER */
 
-  pointer-events:none;
-}
+    .container::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 30px;
+      padding: 1px;
 
-/* PROFILE CARD */
+      background:
+        linear-gradient(135deg,
+          rgba(255, 255, 255, .16),
+          rgba(255, 255, 255, .02),
+          rgba(255, 255, 255, .12));
 
-.card{
-  display:flex;
-  gap:14px;
-  align-items:center;
+      -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
 
-  padding:15px;
-  border-radius:22px;
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
 
-  background:rgba(255,255,255,.045);
+      pointer-events: none;
+    }
 
-  border:1px solid rgba(255,255,255,.07);
+    /* PROFILE */
 
-  margin-bottom:14px;
-}
+    .card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
 
-/* AVATAR */
+      padding: 16px;
 
-.avatar{
-  width:72px;
-  height:72px;
-  border-radius:50%;
-  object-fit:cover;
+      border-radius: 24px;
 
-  border:2px solid rgba(255,255,255,.18);
+      background: rgba(255, 255, 255, .04);
 
-  box-shadow:
-  0 0 18px rgba(255,255,255,.12);
-}
+      border: 1px solid rgba(255, 255, 255, .07);
 
-/* NAME */
+      margin-bottom: 14px;
+    }
 
-.title{
-  font-family:Orbitron;
-  font-size:22px;
-  font-weight:700;
-  letter-spacing:2px;
-  color:#fff;
+    .avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      object-fit: cover;
 
-  text-shadow:
-  0 0 10px rgba(255,255,255,.25);
-}
+      border: 2px solid rgba(255, 255, 255, .15);
 
-.sub{
-  margin-top:5px;
-  font-size:13px;
-  opacity:.78;
-}
+      box-shadow:
+        0 0 20px rgba(255, 255, 255, .1);
+    }
 
-.loc{
-  margin-top:4px;
-  font-size:11px;
-  opacity:.52;
-}
+    .title {
+      font-family: Orbitron;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: #fff;
 
-/* LINKS */
+      text-shadow:
+        0 0 12px rgba(255, 255, 255, .22);
+    }
 
-.links{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  margin-top:12px;
-}
+    .sub {
+      margin-top: 5px;
+      font-size: 13px;
+      opacity: .8;
+    }
 
-.links a{
-  display:flex;
-  align-items:center;
-  gap:6px;
+    .loc {
+      margin-top: 4px;
+      font-size: 11px;
+      opacity: .55;
+    }
 
-  padding:8px 12px;
+    /* SOCIAL LINKS */
 
-  border-radius:14px;
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
 
-  background:rgba(255,255,255,.05);
+    .links a {
+      display: flex;
+      align-items: center;
+      gap: 6px;
 
-  border:1px solid rgba(255,255,255,.08);
+      padding: 8px 13px;
 
-  color:#fff;
-  text-decoration:none;
-  font-size:12px;
-  transition:.25s;
-}
+      border-radius: 14px;
 
-.links a:hover{
-  transform:translateY(-2px);
-  background:rgba(255,255,255,.11);
-  border-color:rgba(255,255,255,.18);
-}
+      background: rgba(255, 255, 255, .05);
 
-.links img{
-  width:16px;
-}
+      border: 1px solid rgba(255, 255, 255, .08);
 
-/* SERVER */
+      color: #fff;
+      text-decoration: none;
+      font-size: 12px;
 
-.server{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:14px;
+      transition: .25s;
+    }
 
-  padding:15px;
-  border-radius:22px;
+    .links a:hover {
+      transform: translateY(-2px);
 
-  background:rgba(255,255,255,.045);
+      background: rgba(255, 255, 255, .11);
 
-  border:1px solid rgba(255,255,255,.07);
-}
+      border-color: rgba(255, 255, 255, .15);
+    }
 
-.server-left{
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
+    .links img {
+      width: 16px;
+    }
 
-.server img{
-  width:46px;
-  height:46px;
-  border-radius:14px;
-  object-fit:cover;
-}
+    /* SERVER */
 
-.server-title{
-  font-size:15px;
-  font-weight:600;
-}
+    .server {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
 
-.server-sub{
-  margin-top:3px;
-  font-size:11px;
-  opacity:.55;
-}
+      padding: 15px;
 
-/* JOIN BUTTON */
+      border-radius: 24px;
 
-.join{
-  position:relative;
+      background: rgba(255, 255, 255, .04);
 
-  padding:10px 18px;
+      border: 1px solid rgba(255, 255, 255, .07);
+    }
 
-  border-radius:14px;
+    .server-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
 
-  text-decoration:none;
-  color:#fff;
+    .server img {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      object-fit: cover;
+    }
 
-  font-size:12px;
-  font-weight:600;
-  letter-spacing:1px;
+    .server-title {
+      font-size: 15px;
+      font-weight: 600;
+    }
 
-  overflow:hidden;
+    .server-sub {
+      font-size: 11px;
+      opacity: .55;
+      margin-top: 3px;
+    }
 
-  background:
-  linear-gradient(
-    135deg,
-    #ffffff22,
-    #ffffff10
-  );
+    /* JOIN BUTTON */
 
-  border:1px solid rgba(255,255,255,.16);
+    .join {
+      position: relative;
 
-  backdrop-filter:blur(10px);
+      padding: 10px 18px;
 
-  transition:.3s;
-}
+      border-radius: 14px;
 
-.join::before{
-  content:'';
-  position:absolute;
-  top:0;
-  left:-100%;
-  width:100%;
-  height:100%;
+      text-decoration: none;
+      color: #fff;
 
-  background:
-  linear-gradient(
-    90deg,
-    transparent,
-    rgba(255,255,255,.25),
-    transparent
-  );
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1px;
 
-  transition:.5s;
-}
+      overflow: hidden;
 
-.join:hover::before{
-  left:100%;
-}
+      background:
+        linear-gradient(135deg,
+          rgba(255, 255, 255, .18),
+          rgba(255, 255, 255, .06));
 
-.join:hover{
-  transform:translateY(-2px) scale(1.03);
+      border: 1px solid rgba(255, 255, 255, .15);
 
-  box-shadow:
-  0 0 20px rgba(255,255,255,.15);
-}
+      transition: .3s;
+    }
 
-/* CUSTOM MUSIC BUTTON */
+    .join::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
 
-.music-btn{
-  margin-top:14px;
+      width: 100%;
+      height: 100%;
 
-  width:100%;
+      background:
+        linear-gradient(90deg,
+          transparent,
+          rgba(255, 255, 255, .3),
+          transparent);
 
-  padding:13px;
+      transition: .5s;
+    }
 
-  border:none;
-  outline:none;
+    .join:hover::before {
+      left: 100%;
+    }
 
-  border-radius:18px;
+    .join:hover {
+      transform: translateY(-2px) scale(1.03);
 
-  background:rgba(255,255,255,.06);
+      box-shadow:
+        0 0 20px rgba(255, 255, 255, .12);
+    }
 
-  border:1px solid rgba(255,255,255,.09);
+    /* MUSIC BUTTON */
 
-  color:#fff;
+    .music-btn {
+      width: 100%;
+      margin-top: 14px;
 
-  font-size:13px;
-  font-weight:600;
+      padding: 13px;
 
-  cursor:pointer;
+      border: none;
+      outline: none;
 
-  transition:.25s;
-}
+      border-radius: 18px;
 
-.music-btn:hover{
-  background:rgba(255,255,255,.12);
-}
+      background: rgba(255, 255, 255, .05);
 
-/* PARTICLES */
+      border: 1px solid rgba(255, 255, 255, .08);
 
-canvas{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:-1;
-}
+      color: #fff;
 
-/* MOBILE */
+      font-size: 13px;
+      font-weight: 600;
 
-@media(max-width:500px){
+      cursor: pointer;
 
-  .container{
-    width:94%;
-    padding:16px;
-  }
+      transition: .25s;
+    }
 
-  .title{
-    font-size:20px;
-  }
+    .music-btn:hover {
+      background: rgba(255, 255, 255, .12);
+    }
 
-  .avatar{
-    width:66px;
-    height:66px;
-  }
+    /* PARTICLES */
 
-}
-</style>
+    canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    /* MOBILE */
+
+    @media(max-width:500px) {
+
+      .container {
+        width: 94%;
+        padding: 16px;
+      }
+
+      .title {
+        font-size: 20px;
+      }
+
+      .avatar {
+        width: 66px;
+        height: 66px;
+      }
+
+    }
+  </style>
 </head>
 
 <body>
 
-<!-- ENTRY SCREEN -->
+  <!-- ENTRY -->
 
-<div id="overlay">
-  <h1>ANSHHH</h1>
-  <p>tap to enter</p>
-</div>
-
-<!-- VIDEO -->
-
-<video id="bg" loop muted playsinline>
-  <source src="video.mp4" type="video/mp4" />
-</video>
-
-<div class="bg-overlay"></div>
-
-<!-- MUSIC -->
-
-<audio id="music" loop>
-  <source src="song.mp3" type="audio/mp3" />
-</audio>
-
-<!-- MAIN -->
-
-<div class="container">
-
-  <!-- PROFILE -->
-
-  <div class="card">
-
-    <img src="profile.jpeg" class="avatar" />
-
-    <div>
-
-      <div class="title">Anshhh</div>
-
-      <div class="sub">
-        Developer • Event Manager
-      </div>
-
-      <div class="loc">
-        📍 Bhilai, India
-      </div>
-
-      <div class="links">
-
-        <a href="https://www.instagram.com/anshhhyrrrr?igsh=dmg1ZzZtMWxkeGow" target="_blank">
-          <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png">
-          Instagram
-        </a>
-
-        <a href="https://github.com/shreyy-gims" target="_blank">
-          <img src="https://cdn-icons-png.flaticon.com/512/733/733553.png">
-          GitHub
-        </a>
-
-        <a href="https://open.spotify.com/user/317fetkkltqoeycuqqxt5tlsx4wu?si=BksPV-J8QECOL4-LcfS-WQ" target="_blank">
-          <img src="https://cdn-icons-png.flaticon.com/512/174/174872.png">
-          Spotify
-        </a>
-
-      </div>
-
-    </div>
-
+  <div id="overlay">
+    <h1>ANSHHH</h1>
+    <p>tap to enter</p>
   </div>
 
-  <!-- SERVER -->
+  <!-- VIDEO -->
 
-  <div class="server">
+  <video id="bg" autoplay loop muted playsinline webkit-playsinline>
+    <source src="video.mp4" type="video/mp4">
+  </video>
 
-    <div class="server-left">
+  <div class="bg-overlay"></div>
 
-      <img src="server.png">
+  <!-- MUSIC -->
+
+  <audio id="music" loop>
+    <source src="song.mp3" type="audio/mp3">
+  </audio>
+
+  <!-- MAIN CARD -->
+
+  <div class="container">
+
+    <!-- PROFILE -->
+
+    <div class="card">
+
+      <img src="profile.jpeg" class="avatar">
 
       <div>
-        <div class="server-title">
-          afterdark society
+
+        <div class="title">Anshhh</div>
+
+        <div class="sub">
+          Developer • Event Manager
         </div>
 
-        <div class="server-sub">
-          private community
+        <div class="loc">
+          📍 Bhilai
         </div>
+
+        <div class="links">
+
+          <a href="https://www.instagram.com/anshhhyrrrr?igsh=dmg1ZzZtMWxkeGow"
+            target="_blank">
+
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png">
+
+            Instagram
+          </a>
+
+          <a href="https://github.com/shreyy-gims"
+            target="_blank">
+
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/733/733553.png">
+
+            GitHub
+          </a>
+
+          <a href="https://open.spotify.com/user/317fetkkltqoeycuqqxt5tlsx4wu?si=BksPV-J8QECOL4-LcfS-WQ"
+            target="_blank">
+
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/174/174872.png">
+
+            Spotify
+          </a>
+
+        </div>
+
       </div>
 
     </div>
 
-    <a class="join" href="https://discord.gg/xFxQqzUY" target="_blank">
-      JOIN
-    </a>
+    <!-- SERVER -->
+
+    <div class="server">
+
+      <div class="server-left">
+
+        <img src="server.png">
+
+        <div>
+
+          <div class="server-title">
+            afterdark society
+          </div>
+
+          <div class="server-sub">
+            private community
+          </div>
+
+        </div>
+
+      </div>
+
+      <a class="join"
+        href="https://discord.gg/xFxQqzUY"
+        target="_blank">
+
+        JOIN
+
+      </a>
+
+    </div>
+
+    <!-- MUSIC BUTTON -->
+
+    <button class="music-btn" id="musicToggle">
+      ♫ Pause Music
+    </button>
 
   </div>
 
-  <!-- MUSIC BUTTON -->
+  <!-- PARTICLES -->
 
-  <button class="music-btn" id="musicToggle">
-    ♫ Pause Music
-  </button>
+  <canvas id="c"></canvas>
 
-</div>
+  <script>
 
-<!-- PARTICLES -->
+    const overlay = document.getElementById('overlay');
+    const music = document.getElementById('music');
+    const video = document.getElementById('bg');
+    const musicBtn = document.getElementById('musicToggle');
 
-<canvas id="c"></canvas>
+    let playing = true;
 
-<script>
-const overlay = document.getElementById('overlay');
-const music = document.getElementById('music');
-const video = document.getElementById('bg');
-const musicBtn = document.getElementById('musicToggle');
+    /* ENTER */
 
-let playing = true;
+    overlay.addEventListener('click', async () => {
 
-/* ENTER */
+      overlay.style.opacity = '0';
 
-overlay.onclick = async () => {
+      setTimeout(() => {
+        overlay.style.display = 'none';
+      }, 500);
 
-  overlay.style.display = 'none';
+      /* VIDEO */
 
-  try{
-    await video.play();
-  }catch(e){}
+      try {
 
-  try{
-    music.volume = 0.6;
-    await music.play();
-  }catch(e){}
+        video.muted = true;
 
-  gsap.from('.container',{
-    opacity:0,
-    y:40,
-    duration:1.2,
-    ease:'power3.out'
-  });
+        await video.play();
 
-}
+      } catch (err) {
 
-/* MUSIC TOGGLE */
+        console.log('Video blocked');
 
-musicBtn.onclick = () => {
+      }
 
-  if(playing){
-    music.pause();
-    musicBtn.innerHTML = '♫ Play Music';
-  }else{
-    music.play();
-    musicBtn.innerHTML = '♫ Pause Music';
-  }
+      /* MUSIC */
 
-  playing = !playing;
-}
+      try {
 
-/* PARTICLES */
+        music.volume = 0.6;
 
-const canvas = document.getElementById('c');
-const ctx = canvas.getContext('2d');
+        await music.play();
 
-function resize(){
-  canvas.width = innerWidth;
-  canvas.height = innerHeight;
-}
+      } catch (err) {
 
-resize();
+        console.log('Music blocked');
 
-window.addEventListener('resize',resize);
+      }
 
-const particles = [];
+      /* ANIMATION */
 
-window.addEventListener('mousemove',e=>{
-  for(let i=0;i<2;i++){
-    particles.push({
-      x:e.clientX,
-      y:e.clientY,
-      size:Math.random()*2+1,
-      life:40
+      gsap.from('.container', {
+        opacity: 0,
+        y: 40,
+        duration: 1.2,
+        ease: 'power3.out'
+      });
+
     });
-  }
-});
 
-window.addEventListener('touchmove',e=>{
-  const t = e.touches[0];
+    /* MUSIC TOGGLE */
 
-  particles.push({
-    x:t.clientX,
-    y:t.clientY,
-    size:2,
-    life:40
-  });
-});
+    musicBtn.onclick = () => {
 
-function animate(){
+      if (playing) {
 
-  ctx.clearRect(0,0,canvas.width,canvas.height);
+        music.pause();
 
-  for(let i=particles.length-1;i>=0;i--){
+        musicBtn.innerHTML = '♫ Play Music';
 
-    const p = particles[i];
+      } else {
 
-    ctx.beginPath();
+        music.play();
 
-    ctx.fillStyle = `rgba(255,255,255,${p.life/40})`;
+        musicBtn.innerHTML = '♫ Pause Music';
 
-    ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+      }
 
-    ctx.fill();
-
-    p.life--;
-    p.y -= .3;
-
-    if(p.life <= 0){
-      particles.splice(i,1);
+      playing = !playing;
     }
-  }
 
-  requestAnimationFrame(animate);
-}
+    /* PARTICLES */
 
-animate();
-</script>
+    const canvas = document.getElementById('c');
+    const ctx = canvas.getContext('2d');
+
+    function resize() {
+
+      canvas.width = innerWidth;
+      canvas.height = innerHeight;
+
+    }
+
+    resize();
+
+    window.addEventListener('resize', resize);
+
+    const particles = [];
+
+    window.addEventListener('mousemove', e => {
+
+      for (let i = 0; i < 2; i++) {
+
+        particles.push({
+          x: e.clientX,
+          y: e.clientY,
+          size: Math.random() * 2 + 1,
+          life: 40
+        });
+
+      }
+
+    });
+
+    window.addEventListener('touchmove', e => {
+
+      const t = e.touches[0];
+
+      particles.push({
+        x: t.clientX,
+        y: t.clientY,
+        size: 2,
+        life: 40
+      });
+
+    });
+
+    function animate() {
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (let i = particles.length - 1; i >= 0; i--) {
+
+        const p = particles[i];
+
+        ctx.beginPath();
+
+        ctx.fillStyle =
+          `rgba(255,255,255,${p.life / 40})`;
+
+        ctx.arc(
+          p.x,
+          p.y,
+          p.size,
+          0,
+          Math.PI * 2
+        );
+
+        ctx.fill();
+
+        p.life--;
+
+        p.y -= .3;
+
+        if (p.life <= 0) {
+
+          particles.splice(i, 1);
+
+        }
+
+      }
+
+      requestAnimationFrame(animate);
+
+    }
+
+    animate();
+
+  </script>
 
 </body>
+
 </html>
