@@ -1,168 +1,651 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title></title>
+<meta charset="UTF-8" />
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+/>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<title>Anshhh</title>
+
+<link
+  href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter:wght@400;600;700&display=swap"
+  rel="stylesheet"
+/>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
 <style>
-body{margin:0;background:#000;color:#fff;font-family:Inter;overflow:hidden}
+
+*{
+ margin:0;
+ padding:0;
+ box-sizing:border-box;
+}
+
+body{
+ background:#000;
+ color:#fff;
+ overflow:hidden;
+ font-family:Inter,sans-serif;
+}
+
+/* VIDEO */
+
+video{
+ position:fixed;
+ inset:0;
+ width:100%;
+ height:100%;
+ object-fit:cover;
+ filter:brightness(.45);
+ z-index:-3;
+}
+
+/* OVERLAY */
 
 #overlay{
- position:fixed;inset:0;
- display:flex;flex-direction:column;
- align-items:center;justify-content:center;
- background:#000;z-index:10;
+ position:fixed;
+ inset:0;
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ justify-content:center;
+ background:#000;
+ z-index:999;
+ cursor:pointer;
+}
+
+#overlay h1{
  font-family:Orbitron;
-}
-
-#overlay h1{font-size:22px;letter-spacing:2px}
-#overlay p{opacity:.6;font-size:12px}
-
-video{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.5)}
-
-.container{
- position:absolute;
- top:50%;left:50%;
- transform:translate(-50%,-50%);
- width:92%;max-width:380px;
- padding:18px;
- border-radius:22px;
- backdrop-filter:blur(30px);
- background:rgba(20,20,25,.35);
- border:1px solid rgba(255,255,255,.08);
- box-shadow:0 20px 80px rgba(0,0,0,.6);
-}
-
-.card,.server{
- display:flex;gap:12px;
- padding:12px;border-radius:14px;
- background:rgba(255,255,255,.04);
- border:1px solid rgba(255,255,255,.08);
+ font-size:30px;
+ letter-spacing:5px;
  margin-bottom:10px;
 }
 
-.avatar{width:55px;height:55px;border-radius:50%}
-.server img{width:36px;border-radius:8px}
+#overlay p{
+ opacity:.55;
+ font-size:12px;
+ letter-spacing:3px;
+ text-transform:uppercase;
+}
 
-.title{font-family:Orbitron;font-size:16px}
-.sub{opacity:.6;font-size:12px}
-.loc{opacity:.5;font-size:11px}
+/* GLOW */
+
+.glow{
+ position:fixed;
+ width:300px;
+ height:300px;
+ border-radius:50%;
+ background:radial-gradient(
+  circle,
+  rgba(168,85,247,.22),
+  rgba(59,130,246,.08),
+  transparent 70%
+ );
+ pointer-events:none;
+ z-index:-1;
+ filter:blur(30px);
+ transition:transform .1s linear;
+}
+
+/* CONTAINER */
+
+.container{
+ position:absolute;
+ top:50%;
+ left:50%;
+ transform:translate(-50%,-50%);
+ width:92%;
+ max-width:390px;
+
+ padding:18px;
+
+ border-radius:28px;
+
+ background:rgba(20,20,25,.28);
+
+ backdrop-filter:blur(30px);
+
+ border:1px solid rgba(255,255,255,.08);
+
+ box-shadow:
+ 0 20px 80px rgba(0,0,0,.65),
+ 0 0 40px rgba(139,92,246,.15);
+
+ overflow:hidden;
+}
+
+/* ANIMATED BORDER */
+
+.container::before{
+ content:'';
+ position:absolute;
+ inset:0;
+ border-radius:28px;
+ padding:1px;
+
+ background:linear-gradient(
+ 135deg,
+ #7c3aed,
+ #06b6d4,
+ #ec4899
+ );
+
+ -webkit-mask:
+ linear-gradient(#fff 0 0) content-box,
+ linear-gradient(#fff 0 0);
+
+ -webkit-mask-composite:xor;
+ mask-composite:exclude;
+
+ animation:borderGlow 6s linear infinite;
+ pointer-events:none;
+}
+
+@keyframes borderGlow{
+ 0%{
+  filter:hue-rotate(0deg);
+ }
+ 100%{
+  filter:hue-rotate(360deg);
+ }
+}
+
+/* CARD */
+
+.card,
+.server{
+ position:relative;
+ display:flex;
+ gap:14px;
+ align-items:center;
+
+ padding:14px;
+ margin-bottom:12px;
+
+ border-radius:18px;
+
+ background:rgba(255,255,255,.04);
+
+ border:1px solid rgba(255,255,255,.08);
+
+ transition:.35s ease;
+ overflow:hidden;
+}
+
+.card:hover,
+.server:hover{
+ transform:translateY(-4px);
+ box-shadow:0 10px 40px rgba(139,92,246,.18);
+ border:1px solid rgba(139,92,246,.35);
+}
+
+/* AVATAR */
+
+.avatar{
+ width:62px;
+ height:62px;
+ border-radius:50%;
+ object-fit:cover;
+ border:2px solid rgba(255,255,255,.15);
+}
+
+/* TEXT */
+
+.title{
+ font-family:Orbitron;
+ font-size:18px;
+ font-weight:700;
+ letter-spacing:1px;
+}
+
+.sub{
+ opacity:.72;
+ font-size:12px;
+ margin-top:2px;
+}
+
+.loc{
+ opacity:.45;
+ font-size:11px;
+ margin-top:4px;
+}
+
+/* STATUS */
+
+.status{
+ display:flex;
+ align-items:center;
+ gap:6px;
+ margin-top:8px;
+ font-size:11px;
+ opacity:.75;
+}
+
+.status span{
+ width:8px;
+ height:8px;
+ border-radius:50%;
+ background:#22c55e;
+ box-shadow:0 0 10px #22c55e;
+}
+
+/* LINKS */
+
+.links{
+ display:flex;
+ gap:12px;
+ margin-top:10px;
+ flex-wrap:wrap;
+}
+
+.links a{
+ display:flex;
+ align-items:center;
+ gap:6px;
+
+ color:#fff;
+ text-decoration:none;
+
+ font-size:12px;
+ opacity:.85;
+
+ transition:.3s ease;
+}
+
+.links a:hover{
+ opacity:1;
+ transform:translateY(-2px);
+}
+
+.links img{
+ width:16px;
+}
+
+/* SERVER */
+
+.server img{
+ width:42px;
+ height:42px;
+ border-radius:12px;
+ object-fit:cover;
+}
+
+/* JOIN BUTTON */
 
 .join{
- margin-top:5px;
- padding:5px 12px;
- border-radius:12px;
- background:#22c55e;
- color:#fff;text-decoration:none;
+ position:relative;
+ overflow:hidden;
+ margin-left:auto;
+
+ padding:10px 18px;
+
+ border-radius:16px;
+
+ background:linear-gradient(
+ 135deg,
+ #7c3aed,
+ #06b6d4
+ );
+
+ color:#fff;
+ text-decoration:none;
+
  font-size:12px;
+ font-weight:700;
+ letter-spacing:.6px;
+
+ border:1px solid rgba(255,255,255,.15);
+
+ box-shadow:
+ 0 0 20px rgba(124,58,237,.35),
+ 0 0 40px rgba(6,182,212,.15);
+
+ transition:.35s ease;
 }
 
-.links{display:flex;gap:10px;margin-top:6px}
-.links a{display:flex;align-items:center;gap:5px;font-size:12px;color:#fff;text-decoration:none}
-.links img{width:16px}
+.join:hover{
+ transform:translateY(-2px) scale(1.04);
 
-/* glow */
+ box-shadow:
+ 0 0 30px rgba(124,58,237,.5),
+ 0 0 60px rgba(6,182,212,.25);
+}
+
+.join::before{
+ content:'';
+
+ position:absolute;
+ top:0;
+ left:-120%;
+
+ width:80%;
+ height:100%;
+
+ background:linear-gradient(
+ 90deg,
+ transparent,
+ rgba(255,255,255,.35),
+ transparent
+ );
+
+ transform:skewX(-20deg);
+ transition:.7s;
+}
+
+.join:hover::before{
+ left:140%;
+}
+
+/* VISUALIZER */
+
+.visualizer{
+ display:flex;
+ gap:4px;
+ margin-top:10px;
+}
+
+.visualizer span{
+ width:4px;
+ height:20px;
+ border-radius:10px;
+ background:#fff;
+ animation:bounce 1s infinite ease-in-out;
+}
+
+.visualizer span:nth-child(2){
+ animation-delay:.2s;
+}
+
+.visualizer span:nth-child(3){
+ animation-delay:.4s;
+}
+
+.visualizer span:nth-child(4){
+ animation-delay:.6s;
+}
+
+@keyframes bounce{
+ 0%,100%{
+  transform:scaleY(.4);
+ }
+ 50%{
+  transform:scaleY(1.4);
+ }
+}
+
+/* PARTICLES */
+
+canvas{
+ position:fixed;
+ inset:0;
+ pointer-events:none;
+ z-index:-1;
+}
+
+/* MOBILE */
+
+@media(max-width:480px){
+
+ .container{
+  width:94%;
+ }
+
+ .title{
+  font-size:16px;
+ }
 
 }
 
-canvas{position:fixed;inset:0;pointer-events:none}
 </style>
 </head>
+
 <body>
 
+<!-- OVERLAY -->
+
 <div id="overlay">
- <h1></h1>
+ <h1>ANSHHH</h1>
  <p>tap to enter</p>
 </div>
+
+<!-- VIDEO -->
 
 <video id="bg" loop muted playsinline>
  <source src="video.mp4" type="video/mp4">
 </video>
 
+<!-- MUSIC -->
+
 <audio id="music" loop>
  <source src="song.mp3" type="audio/mp3">
 </audio>
 
-<div class="container" id="wrap">
-
-<div class="card">
- <img src="profile.jpeg" class="avatar">
- <div>
-  <div class="title">Anshh</div>
-  <div class="sub">Developer , Event Manager</div>
-  <div class="loc">📍 Bhilai</div>
-  <div class="links">
-   <a href="https://www.instagram.com/anshhhyrrrr?igsh=dmg1ZzZtMWxkeGow"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png">Insta</a>
-   <a href="https://github.com/shreyy-gims"><img src="https://cdn-icons-png.flaticon.com/512/733/733553.png">GitHub</a>
-   <a href="https://open.spotify.com/user/317fetkkltqoeycuqqxt5tlsx4wu?si=BksPV-J8QECOL4-LcfS-WQ">
-  <img src="https://cdn-icons-png.flaticon.com/512/174/174872.png">
-  Spotify
-</a>
-  </div>
- </div>
-</div>
-
-<div class="server">
- <img src="server.png">
- <div>
-  <div>afterdark society</div>
-  <div class="sub">Private server</div>
- </div>
- <a class="join" href="https://discord.gg/xFxQqzUY">Join</a>
-</div>
-
-</div>
+<!-- GLOW -->
 
 <div class="glow" id="glow"></div>
+
+<!-- MAIN -->
+
+<div class="container">
+
+ <!-- PROFILE -->
+
+ <div class="card">
+
+  <img src="profile.jpeg" class="avatar">
+
+  <div>
+
+   <div class="title" id="typing"></div>
+
+   <div class="sub">
+    Developer • Event Manager
+   </div>
+
+   <div class="loc">
+    📍 Bhilai
+   </div>
+
+   <div class="status">
+    <span></span>
+    Online
+   </div>
+
+   <div class="visualizer">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+   </div>
+
+   <div class="links">
+
+    <a href="https://www.instagram.com/anshhhyrrrr?igsh=dmg1ZzZtMWxkeGow">
+      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png">
+      Insta
+    </a>
+
+    <a href="https://github.com/shreyy-gims">
+      <img src="https://cdn-icons-png.flaticon.com/512/733/733553.png">
+      GitHub
+    </a>
+
+    <a href="https://open.spotify.com/user/317fetkkltqoeycuqqxt5tlsx4wu?si=BksPV-J8QECOL4-LcfS-WQ">
+      <img src="https://cdn-icons-png.flaticon.com/512/174/174872.png">
+      Spotify
+    </a>
+
+   </div>
+
+  </div>
+
+ </div>
+
+ <!-- SERVER -->
+
+ <div class="server">
+
+  <img src="server.png">
+
+  <div>
+
+   <div class="title" style="font-size:14px">
+    afterdark society
+   </div>
+
+   <div class="sub">
+    Private server
+   </div>
+
+  </div>
+
+  <a class="join" href="https://discord.gg/xFxQqzUY">
+    JOIN
+  </a>
+
+ </div>
+
+</div>
+
+<!-- PARTICLES -->
+
 <canvas id="c"></canvas>
 
 <script>
-const overlay=document.getElementById('overlay');
-const music=document.getElementById('music');
-const video=document.getElementById('bg');
-const glow=document.getElementById('glow');
 
-overlay.onclick=()=>{
- overlay.style.display='none';
- video.play();
- music.volume=0.6;
- music.play();
- gsap.from('.container',{opacity:0,y:40,duration:1});
+/* ELEMENTS */
+
+const overlay = document.getElementById('overlay');
+const music = document.getElementById('music');
+const video = document.getElementById('bg');
+const glow = document.getElementById('glow');
+
+/* TYPING EFFECT */
+
+const text = "ANSHHH";
+let i = 0;
+
+function type(){
+ if(i < text.length){
+  document.getElementById('typing').innerHTML += text.charAt(i);
+  i++;
+  setTimeout(type,120);
+ }
 }
 
-// glow follow
+type();
+
+/* ENTER */
+
+overlay.onclick = () => {
+
+ navigator.vibrate?.(30);
+
+ gsap.to('#overlay',{
+  opacity:0,
+  duration:1,
+  onComplete(){
+   overlay.style.display='none';
+  }
+ });
+
+ video.play();
+
+ music.volume = 0.6;
+
+ music.play();
+
+ gsap.from('.container',{
+  opacity:0,
+  y:40,
+  duration:1.2,
+  ease:'power3.out'
+ });
+
+}
+
+/* GLOW FOLLOW */
+
 addEventListener('mousemove',e=>{
- glow.style.left=e.clientX-150+'px';
- glow.style.top=e.clientY-150+'px';
-});
-addEventListener('touchmove',e=>{
- let t=e.touches[0];
- glow.style.left=t.clientX-150+'px';
- glow.style.top=t.clientY-150+'px';
+
+ glow.style.transform =
+ `translate(${e.clientX-150}px,${e.clientY-150}px)`;
+
 });
 
-// particles
-const canvas=document.getElementById('c');
-const ctx=canvas.getContext('2d');
-canvas.width=innerWidth;canvas.height=innerHeight;
-let pts=[];
+/* PARTICLES */
+
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+
+canvas.width = innerWidth;
+canvas.height = innerHeight;
+
+let pts = [];
+
 addEventListener('mousemove',e=>{
- pts.push({x:e.clientX,y:e.clientY,l:40});
-});
-(function draw(){
- ctx.clearRect(0,0,canvas.width,canvas.height);
- pts.forEach((p,i)=>{
-  ctx.fillStyle=`rgba(255,255,255,${p.l/40})`;
-  ctx.fillRect(p.x,p.y,2,2);
-  p.l--;
-  if(p.l<=0) pts.splice(i,1);
+
+ pts.push({
+  x:e.clientX,
+  y:e.clientY,
+  l:40
  });
+
+});
+
+function draw(){
+
+ ctx.clearRect(0,0,canvas.width,canvas.height);
+
+ pts.forEach((p,i)=>{
+
+  ctx.beginPath();
+
+  ctx.fillStyle =
+  `rgba(255,255,255,${p.l/40})`;
+
+  ctx.arc(p.x,p.y,2,0,Math.PI*2);
+
+  ctx.fill();
+
+  p.l--;
+
+  if(p.l<=0){
+   pts.splice(i,1);
+  }
+
+ });
+
  requestAnimationFrame(draw);
-})();
+
+}
+
+draw();
+
+/* RESIZE */
+
+addEventListener('resize',()=>{
+
+ canvas.width = innerWidth;
+ canvas.height = innerHeight;
+
+});
+
+/* MUSIC EFFECT */
+
+music.onpause = () => {
+ document.querySelector('.container')
+ .style.filter='blur(2px)';
+}
+
+music.onplay = () => {
+ document.querySelector('.container')
+ .style.filter='blur(0px)';
+}
+
 </script>
 
 </body>
