@@ -1,696 +1,519 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-
-  <meta name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-
-  <title>Anshhh</title>
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter:wght@400;500;600&display=swap"
-    rel="stylesheet" />
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html,
-    body {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      font-family: Inter, sans-serif;
-      background: #000;
-      color: #fff;
-    }
-
-    /* VIDEO */
-
-    video {
-      position: fixed;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: brightness(.38);
-      z-index: -5;
-    }
-
-    /* DARK LAYER */
-
-    .bg-overlay {
-      position: fixed;
-      inset: 0;
-
-      background:
-        radial-gradient(circle at top,
-          rgba(255, 255, 255, 0.08),
-          transparent 35%),
-        linear-gradient(to bottom,
-          rgba(0, 0, 0, .2),
-          rgba(0, 0, 0, .75));
-
-      z-index: -4;
-    }
-
-    /* ENTRY SCREEN */
-
-    #overlay {
-      position: fixed;
-      inset: 0;
-      background: #000;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 999;
-      cursor: pointer;
-      transition: .5s;
-    }
-
-    #overlay h1 {
-      font-family: Orbitron;
-      font-size: 30px;
-      letter-spacing: 7px;
-      margin-bottom: 12px;
-      color: #fff;
-    }
-
-    #overlay p {
-      font-size: 12px;
-      letter-spacing: 4px;
-      opacity: .6;
-      text-transform: uppercase;
-    }
-
-    /* MAIN CARD */
-
-    .container {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-
-      width: 92%;
-      max-width: 390px;
-
-      padding: 18px;
-
-      border-radius: 30px;
-
-      background: rgba(12, 12, 15, .38);
-
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-
-      border: 1px solid rgba(255, 255, 255, .08);
-
-      box-shadow:
-        0 0 30px rgba(255, 255, 255, .04),
-        0 20px 80px rgba(0, 0, 0, .7);
-
-      overflow: hidden;
-    }
-
-    /* GLOW BORDER */
-
-    .container::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: 30px;
-      padding: 1px;
-
-      background:
-        linear-gradient(135deg,
-          rgba(255, 255, 255, .16),
-          rgba(255, 255, 255, .02),
-          rgba(255, 255, 255, .12));
-
-      -webkit-mask:
-        linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
-
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
-
-      pointer-events: none;
-    }
-
-    /* PROFILE */
-
-    .card {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-
-      padding: 16px;
-
-      border-radius: 24px;
-
-      background: rgba(255, 255, 255, .04);
-
-      border: 1px solid rgba(255, 255, 255, .07);
-
-      margin-bottom: 14px;
-    }
-
-    .avatar {
-      width: 72px;
-      height: 72px;
-      border-radius: 50%;
-      object-fit: cover;
-
-      border: 2px solid rgba(255, 255, 255, .15);
-
-      box-shadow:
-        0 0 20px rgba(255, 255, 255, .1);
-    }
-
-    .title {
-      font-family: Orbitron;
-      font-size: 22px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      color: #fff;
-
-      text-shadow:
-        0 0 12px rgba(255, 255, 255, .22);
-    }
-
-    .sub {
-      margin-top: 5px;
-      font-size: 13px;
-      opacity: .8;
-    }
-
-    .loc {
-      margin-top: 4px;
-      font-size: 11px;
-      opacity: .55;
-    }
-
-    /* SOCIAL LINKS */
-
-    .links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 12px;
-    }
-
-    .links a {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-
-      padding: 8px 13px;
-
-      border-radius: 14px;
-
-      background: rgba(255, 255, 255, .05);
-
-      border: 1px solid rgba(255, 255, 255, .08);
-
-      color: #fff;
-      text-decoration: none;
-      font-size: 12px;
-
-      transition: .25s;
-    }
-
-    .links a:hover {
-      transform: translateY(-2px);
-
-      background: rgba(255, 255, 255, .11);
-
-      border-color: rgba(255, 255, 255, .15);
-    }
-
-    .links img {
-      width: 16px;
-    }
-
-    /* SERVER */
-
-    .server {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-
-      padding: 15px;
-
-      border-radius: 24px;
-
-      background: rgba(255, 255, 255, .04);
-
-      border: 1px solid rgba(255, 255, 255, .07);
-    }
-
-    .server-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .server img {
-      width: 46px;
-      height: 46px;
-      border-radius: 14px;
-      object-fit: cover;
-    }
-
-    .server-title {
-      font-size: 15px;
-      font-weight: 600;
-    }
-
-    .server-sub {
-      font-size: 11px;
-      opacity: .55;
-      margin-top: 3px;
-    }
-
-    /* JOIN BUTTON */
-
-    .join {
-      position: relative;
-
-      padding: 10px 18px;
-
-      border-radius: 14px;
-
-      text-decoration: none;
-      color: #fff;
-
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 1px;
-
-      overflow: hidden;
-
-      background:
-        linear-gradient(135deg,
-          rgba(255, 255, 255, .18),
-          rgba(255, 255, 255, .06));
-
-      border: 1px solid rgba(255, 255, 255, .15);
-
-      transition: .3s;
-    }
-
-    .join::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-
-      width: 100%;
-      height: 100%;
-
-      background:
-        linear-gradient(90deg,
-          transparent,
-          rgba(255, 255, 255, .3),
-          transparent);
-
-      transition: .5s;
-    }
-
-    .join:hover::before {
-      left: 100%;
-    }
-
-    .join:hover {
-      transform: translateY(-2px) scale(1.03);
-
-      box-shadow:
-        0 0 20px rgba(255, 255, 255, .12);
-    }
-
-    /* MUSIC BUTTON */
-
-    .music-btn {
-      width: 100%;
-      margin-top: 14px;
-
-      padding: 13px;
-
-      border: none;
-      outline: none;
-
-      border-radius: 18px;
-
-      background: rgba(255, 255, 255, .05);
-
-      border: 1px solid rgba(255, 255, 255, .08);
-
-      color: #fff;
-
-      font-size: 13px;
-      font-weight: 600;
-
-      cursor: pointer;
-
-      transition: .25s;
-    }
-
-    .music-btn:hover {
-      background: rgba(255, 255, 255, .12);
-    }
-
-    /* PARTICLES */
-
-    canvas {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: -1;
-    }
-
-    /* MOBILE */
-
-    @media(max-width:500px) {
-
-      .container {
-        width: 94%;
-        padding: 16px;
-      }
-
-      .title {
-        font-size: 20px;
-      }
-
-      .avatar {
-        width: 66px;
-        height: 66px;
-      }
-
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+
+<title>Anshh</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+<style>
+
+*{
+ margin:0;
+ padding:0;
+ box-sizing:border-box;
+}
+
+body{
+ background:#000;
+ color:#fff;
+ font-family:Inter,sans-serif;
+ overflow:hidden;
+ -webkit-font-smoothing:antialiased;
+}
+
+/* VIDEO */
+
+video{
+ position:fixed;
+ inset:0;
+ width:100%;
+ height:100%;
+ object-fit:cover;
+ filter:brightness(.42);
+ z-index:-3;
+}
+
+/* DARK OVERLAY */
+
+body::after{
+ content:"";
+ position:fixed;
+ inset:0;
+ background:linear-gradient(
+  to bottom,
+  rgba(0,0,0,.45),
+  rgba(0,0,0,.55)
+ );
+ z-index:-2;
+}
+
+/* ENTER SCREEN */
+
+#overlay{
+ position:fixed;
+ inset:0;
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ justify-content:center;
+ background:#000;
+ z-index:100;
+ cursor:pointer;
+}
+
+#overlay h1{
+ font-family:Orbitron;
+ font-size:30px;
+ letter-spacing:4px;
+ margin-bottom:10px;
+}
+
+#overlay p{
+ opacity:.55;
+ font-size:12px;
+ letter-spacing:3px;
+ text-transform:uppercase;
+ animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
+ 0%,100%{opacity:.3}
+ 50%{opacity:1}
+}
+
+/* MAIN CARD */
+
+.container{
+ position:absolute;
+ top:50%;
+ left:50%;
+ transform:translate(-50%,-50%);
+ width:92%;
+ max-width:390px;
+ padding:18px;
+ border-radius:28px;
+ backdrop-filter:blur(24px);
+ background:rgba(18,18,20,.30);
+ border:1px solid rgba(255,255,255,.08);
+ box-shadow:
+  0 0 0 1px rgba(255,255,255,.03),
+  0 20px 80px rgba(0,0,0,.7);
+ z-index:2;
+}
+
+/* CARD */
+
+.card,
+.server{
+ display:flex;
+ gap:14px;
+ align-items:center;
+ padding:14px;
+ border-radius:20px;
+ background:rgba(255,255,255,.045);
+ border:1px solid rgba(255,255,255,.07);
+ margin-bottom:14px;
+ transition:.35s ease;
+}
+
+.card:hover,
+.server:hover{
+ transform:translateY(-2px);
+ background:rgba(255,255,255,.06);
+ border-color:rgba(255,255,255,.12);
+}
+
+/* PROFILE */
+
+.avatar{
+ width:62px;
+ height:62px;
+ border-radius:50%;
+ object-fit:cover;
+ border:2px solid rgba(255,255,255,.12);
+}
+
+/* TEXT */
+
+.title{
+ font-family:Orbitron;
+ font-size:18px;
+ color:#fff;
+ letter-spacing:1px;
+}
+
+.sub{
+ opacity:.65;
+ font-size:12px;
+ margin-top:3px;
+}
+
+.loc{
+ opacity:.45;
+ font-size:11px;
+ margin-top:4px;
+}
+
+/* LINKS */
+
+.links{
+ display:flex;
+ gap:14px;
+ margin-top:10px;
+ flex-wrap:wrap;
+}
+
+.links a{
+ display:flex;
+ align-items:center;
+ gap:6px;
+ text-decoration:none;
+ color:#fff;
+ font-size:12px;
+ opacity:.75;
+ transition:.3s;
+}
+
+.links a:hover{
+ opacity:1;
+ transform:translateY(-2px);
+}
+
+.links img{
+ width:16px;
+ height:16px;
+}
+
+/* SERVER */
+
+.server img{
+ width:42px;
+ height:42px;
+ border-radius:12px;
+ object-fit:cover;
+}
+
+.server-info{
+ flex:1;
+}
+
+/* JOIN BUTTON */
+
+.join{
+ position:relative;
+ overflow:hidden;
+ margin-top:6px;
+ padding:10px 18px;
+ border-radius:16px;
+ background:linear-gradient(135deg,#111,#1f1f1f);
+ border:1px solid rgba(255,255,255,.12);
+ color:#fff;
+ text-decoration:none;
+ font-size:12px;
+ font-weight:600;
+ letter-spacing:.5px;
+ transition:.35s ease;
+ box-shadow:
+  0 0 0 rgba(255,255,255,0),
+  0 8px 30px rgba(255,255,255,.05);
+ backdrop-filter:blur(12px);
+}
+
+.join::before{
+ content:"";
+ position:absolute;
+ top:-120%;
+ left:-40%;
+ width:60%;
+ height:300%;
+ background:linear-gradient(
+  120deg,
+  transparent,
+  rgba(255,255,255,.35),
+  transparent
+ );
+ transform:rotate(25deg);
+ transition:.7s;
+}
+
+.join::after{
+ content:"";
+ position:absolute;
+ inset:0;
+ border-radius:16px;
+ padding:1px;
+ background:linear-gradient(
+  135deg,
+  rgba(255,255,255,.4),
+  rgba(255,255,255,.05),
+  rgba(255,255,255,.25)
+ );
+ -webkit-mask:
+  linear-gradient(#000 0 0) content-box,
+  linear-gradient(#000 0 0);
+ -webkit-mask-composite:xor;
+ mask-composite:exclude;
+ pointer-events:none;
+ opacity:.6;
+ transition:.4s;
+}
+
+.join:hover{
+ transform:translateY(-3px) scale(1.03);
+ background:linear-gradient(135deg,#161616,#242424);
+ box-shadow:
+  0 0 20px rgba(255,255,255,.12),
+  0 10px 40px rgba(255,255,255,.08);
+}
+
+.join:hover::before{
+ left:140%;
+}
+
+.join:hover::after{
+ opacity:1;
+}
+
+.join:active{
+ transform:scale(.96);
+}
+
+/* CURSOR GLOW */
+
+.glow{
+ position:fixed;
+ width:320px;
+ height:320px;
+ border-radius:50%;
+ background:radial-gradient(
+  circle,
+  rgba(255,255,255,.10) 0%,
+  rgba(255,255,255,.04) 30%,
+  transparent 70%
+ );
+ filter:blur(40px);
+ pointer-events:none;
+ z-index:0;
+ transition:
+  left .08s linear,
+  top .08s linear;
+ mix-blend-mode:screen;
+}
+
+/* PARTICLES */
+
+canvas{
+ position:fixed;
+ inset:0;
+ pointer-events:none;
+ z-index:1;
+}
+
+</style>
 </head>
-
 <body>
 
-  <!-- ENTRY -->
+<!-- ENTER SCREEN -->
 
-  <div id="overlay">
-    <h1>ANSHHH</h1>
-    <p>tap to enter</p>
-  </div>
+<div id="overlay">
+ <h1>ANSHHH</h1>
+ <p>tap to enter</p>
+</div>
 
-  <!-- VIDEO -->
+<!-- VIDEO -->
 
-  <video id="bg" autoplay loop muted playsinline webkit-playsinline>
-    <source src="video.mp4" type="video/mp4">
-  </video>
+<video id="bg" autoplay muted loop playsinline>
+ <source src="video.mp4" type="video/mp4">
+</video>
 
-  <div class="bg-overlay"></div>
+<!-- MUSIC -->
 
-  <!-- MUSIC -->
+<audio id="music" loop>
+ <source src="song.mp3" type="audio/mp3">
+</audio>
 
-  <audio id="music" loop>
-    <source src="song.mp3" type="audio/mp3">
-  </audio>
+<!-- MAIN -->
 
-  <!-- MAIN CARD -->
+<div class="container">
 
-  <div class="container">
+ <div class="card">
 
-    <!-- PROFILE -->
+  <img src="profile.jpeg" class="avatar">
 
-    <div class="card">
+  <div>
 
-      <img src="profile.jpeg" class="avatar">
+   <div class="title">Anshh</div>
 
-      <div>
+   <div class="sub">
+    Developer , Event Manager
+   </div>
 
-        <div class="title">Anshhh</div>
+   <div class="loc">
+    📍 Bhilai
+   </div>
 
-        <div class="sub">
-          Developer • Event Manager
-        </div>
+   <div class="links">
 
-        <div class="loc">
-          📍 Bhilai
-        </div>
+    <a href="https://www.instagram.com/anshhhyrrrr?igsh=dmg1ZzZtMWxkeGow" target="_blank">
+     <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png">
+     Insta
+    </a>
 
-        <div class="links">
+    <a href="https://github.com/shreyy-gims" target="_blank">
+     <img src="https://cdn-icons-png.flaticon.com/512/733/733553.png">
+     GitHub
+    </a>
 
-          <a href="https://www.instagram.com/anshhhyrrrr?igsh=dmg1ZzZtMWxkeGow"
-            target="_blank">
+    <a href="https://open.spotify.com/user/317fetkkltqoeycuqqxt5tlsx4wu?si=BksPV-J8QECOL4-LcfS-WQ" target="_blank">
+     <img src="https://cdn-icons-png.flaticon.com/512/174/174872.png">
+     Spotify
+    </a>
 
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png">
-
-            Instagram
-          </a>
-
-          <a href="https://github.com/shreyy-gims"
-            target="_blank">
-
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/733/733553.png">
-
-            GitHub
-          </a>
-
-          <a href="https://open.spotify.com/user/317fetkkltqoeycuqqxt5tlsx4wu?si=BksPV-J8QECOL4-LcfS-WQ"
-            target="_blank">
-
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/174/174872.png">
-
-            Spotify
-          </a>
-
-        </div>
-
-      </div>
-
-    </div>
-
-    <!-- SERVER -->
-
-    <div class="server">
-
-      <div class="server-left">
-
-        <img src="server.png">
-
-        <div>
-
-          <div class="server-title">
-            afterdark society
-          </div>
-
-          <div class="server-sub">
-            private community
-          </div>
-
-        </div>
-
-      </div>
-
-      <a class="join"
-        href="https://discord.gg/xFxQqzUY"
-        target="_blank">
-
-        JOIN
-
-      </a>
-
-    </div>
-
-    <!-- MUSIC BUTTON -->
-
-    <button class="music-btn" id="musicToggle">
-      ♫ Pause Music
-    </button>
+   </div>
 
   </div>
 
-  <!-- PARTICLES -->
+ </div>
 
-  <canvas id="c"></canvas>
+ <!-- SERVER -->
 
-  <script>
+ <div class="server">
 
-    const overlay = document.getElementById('overlay');
-    const music = document.getElementById('music');
-    const video = document.getElementById('bg');
-    const musicBtn = document.getElementById('musicToggle');
+  <img src="server.png">
 
-    let playing = true;
+  <div class="server-info">
 
-    /* ENTER */
+   <div class="title" style="font-size:14px;">
+    afterdark society
+   </div>
 
-    overlay.addEventListener('click', async () => {
+   <div class="sub">
+    Private server
+   </div>
 
-      overlay.style.opacity = '0';
+  </div>
 
-      setTimeout(() => {
-        overlay.style.display = 'none';
-      }, 500);
+  <a class="join" href="https://discord.gg/xFxQqzUY" target="_blank">
+   Join
+  </a>
 
-      /* VIDEO */
+ </div>
 
-      try {
+</div>
 
-        video.muted = true;
+<!-- GLOW -->
 
-        await video.play();
+<div class="glow" id="glow"></div>
 
-      } catch (err) {
+<!-- PARTICLES -->
 
-        console.log('Video blocked');
+<canvas id="c"></canvas>
 
-      }
+<script>
 
-      /* MUSIC */
+const overlay = document.getElementById('overlay');
+const music = document.getElementById('music');
+const video = document.getElementById('bg');
+const glow = document.getElementById('glow');
 
-      try {
+/* ENTER */
 
-        music.volume = 0.6;
+overlay.onclick = async () => {
 
-        await music.play();
+ overlay.style.opacity='0';
 
-      } catch (err) {
+ setTimeout(()=>{
+  overlay.style.display='none';
+ },500);
 
-        console.log('Music blocked');
+ try{
+  await video.play();
+ }catch(e){
+  console.log(e);
+ }
 
-      }
+ try{
+  music.volume=.6;
+  await music.play();
+ }catch(e){
+  console.log(e);
+ }
 
-      /* ANIMATION */
+ gsap.from('.container',{
+  opacity:0,
+  y:40,
+  duration:1,
+  ease:'power3.out'
+ });
 
-      gsap.from('.container', {
-        opacity: 0,
-        y: 40,
-        duration: 1.2,
-        ease: 'power3.out'
-      });
+}
 
-    });
+/* GLOW FOLLOW */
 
-    /* MUSIC TOGGLE */
+window.addEventListener('mousemove',e=>{
+ glow.style.left=e.clientX-160+'px';
+ glow.style.top=e.clientY-160+'px';
+});
 
-    musicBtn.onclick = () => {
+window.addEventListener('touchmove',e=>{
+ const t=e.touches[0];
+ glow.style.left=t.clientX-160+'px';
+ glow.style.top=t.clientY-160+'px';
+});
 
-      if (playing) {
+/* PARTICLES */
 
-        music.pause();
+const canvas=document.getElementById('c');
+const ctx=canvas.getContext('2d');
 
-        musicBtn.innerHTML = '♫ Play Music';
+function resize(){
+ canvas.width=window.innerWidth;
+ canvas.height=window.innerHeight;
+}
 
-      } else {
+resize();
+window.addEventListener('resize',resize);
 
-        music.play();
+let pts=[];
 
-        musicBtn.innerHTML = '♫ Pause Music';
+window.addEventListener('mousemove',e=>{
+ pts.push({
+  x:e.clientX,
+  y:e.clientY,
+  l:40
+ });
+});
 
-      }
+(function draw(){
 
-      playing = !playing;
-    }
+ ctx.clearRect(0,0,canvas.width,canvas.height);
 
-    /* PARTICLES */
+ pts.forEach((p,i)=>{
 
-    const canvas = document.getElementById('c');
-    const ctx = canvas.getContext('2d');
+  ctx.fillStyle=`rgba(255,255,255,${p.l/40})`;
 
-    function resize() {
+  ctx.beginPath();
+  ctx.arc(p.x,p.y,1.2,0,Math.PI*2);
+  ctx.fill();
 
-      canvas.width = innerWidth;
-      canvas.height = innerHeight;
+  p.l--;
 
-    }
+  if(p.l<=0){
+   pts.splice(i,1);
+  }
 
-    resize();
+ });
 
-    window.addEventListener('resize', resize);
+ requestAnimationFrame(draw);
 
-    const particles = [];
+})();
 
-    window.addEventListener('mousemove', e => {
-
-      for (let i = 0; i < 2; i++) {
-
-        particles.push({
-          x: e.clientX,
-          y: e.clientY,
-          size: Math.random() * 2 + 1,
-          life: 40
-        });
-
-      }
-
-    });
-
-    window.addEventListener('touchmove', e => {
-
-      const t = e.touches[0];
-
-      particles.push({
-        x: t.clientX,
-        y: t.clientY,
-        size: 2,
-        life: 40
-      });
-
-    });
-
-    function animate() {
-
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      for (let i = particles.length - 1; i >= 0; i--) {
-
-        const p = particles[i];
-
-        ctx.beginPath();
-
-        ctx.fillStyle =
-          `rgba(255,255,255,${p.life / 40})`;
-
-        ctx.arc(
-          p.x,
-          p.y,
-          p.size,
-          0,
-          Math.PI * 2
-        );
-
-        ctx.fill();
-
-        p.life--;
-
-        p.y -= .3;
-
-        if (p.life <= 0) {
-
-          particles.splice(i, 1);
-
-        }
-
-      }
-
-      requestAnimationFrame(animate);
-
-    }
-
-    animate();
-
-  </script>
+</script>
 
 </body>
-
 </html>
