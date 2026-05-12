@@ -2,30 +2,37 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+/>
 
-<title>Anshh | AfterDark Society</title>
+<title>Anshhh</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link
+  href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter:wght@400;500;600&display=swap"
+  rel="stylesheet"
+/>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
 <style>
-
 *{
   margin:0;
   padding:0;
   box-sizing:border-box;
 }
 
-body{
-  background:#050505;
-  color:white;
-  font-family:Inter,sans-serif;
+html,body{
+  width:100%;
+  height:100%;
   overflow:hidden;
+  font-family:Inter,sans-serif;
+  background:#000;
+  color:#fff;
 }
 
-/* ===== VIDEO ===== */
+/* VIDEO */
 
 video{
   position:fixed;
@@ -33,53 +40,51 @@ video{
   width:100%;
   height:100%;
   object-fit:cover;
-  filter:brightness(.35) saturate(1.1);
+  filter:brightness(.38);
+  z-index:-3;
 }
 
-/* ===== DARK OVERLAY ===== */
+/* DARK OVERLAY */
 
 .bg-overlay{
   position:fixed;
   inset:0;
   background:
-  radial-gradient(circle at top,#7c3aed22,transparent 45%),
-  radial-gradient(circle at bottom,#2563eb22,transparent 45%),
-  rgba(0,0,0,.55);
-  z-index:1;
+  radial-gradient(circle at top,#ffffff10 0%,transparent 35%),
+  linear-gradient(to bottom,#00000055,#000000cc);
+  z-index:-2;
 }
 
-/* ===== ENTER SCREEN ===== */
+/* ENTRY SCREEN */
 
 #overlay{
   position:fixed;
   inset:0;
   background:#000;
-  z-index:20;
   display:flex;
+  flex-direction:column;
   align-items:center;
   justify-content:center;
-  flex-direction:column;
+  z-index:999;
   cursor:pointer;
 }
 
 #overlay h1{
   font-family:Orbitron;
   font-size:28px;
-  letter-spacing:4px;
-  margin-bottom:10px;
-
-  background:linear-gradient(90deg,#fff,#8b5cf6,#3b82f6);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
+  letter-spacing:6px;
+  margin-bottom:12px;
+  color:#fff;
 }
 
 #overlay p{
+  font-size:12px;
+  letter-spacing:3px;
   opacity:.65;
-  font-size:13px;
-  letter-spacing:2px;
+  text-transform:uppercase;
 }
 
-/* ===== MAIN CARD ===== */
+/* MAIN CARD */
 
 .container{
   position:absolute;
@@ -88,82 +93,114 @@ video{
   transform:translate(-50%,-50%);
   width:92%;
   max-width:390px;
-  z-index:5;
-
   padding:18px;
 
-  border-radius:28px;
+  border-radius:30px;
 
-  backdrop-filter:blur(24px);
+  background:rgba(15,15,18,.42);
 
-  background:rgba(16,16,20,.45);
+  backdrop-filter:blur(22px);
+  -webkit-backdrop-filter:blur(22px);
 
   border:1px solid rgba(255,255,255,.08);
 
   box-shadow:
-  0 0 40px rgba(0,0,0,.55),
-  inset 0 0 30px rgba(255,255,255,.03);
+  0 0 30px rgba(255,255,255,.05),
+  0 20px 80px rgba(0,0,0,.65);
+
+  overflow:hidden;
 }
 
-/* ===== PROFILE ===== */
+/* GLOW BORDER */
+
+.container::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  padding:1px;
+  border-radius:30px;
+
+  background:
+  linear-gradient(
+    135deg,
+    rgba(255,255,255,.18),
+    rgba(255,255,255,.02),
+    rgba(255,255,255,.12)
+  );
+
+  -webkit-mask:
+  linear-gradient(#fff 0 0) content-box,
+  linear-gradient(#fff 0 0);
+
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+
+  pointer-events:none;
+}
+
+/* PROFILE CARD */
 
 .card{
   display:flex;
   gap:14px;
+  align-items:center;
 
-  padding:16px;
-
+  padding:15px;
   border-radius:22px;
 
-  background:rgba(255,255,255,.04);
+  background:rgba(255,255,255,.045);
 
-  border:1px solid rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.07);
 
   margin-bottom:14px;
 }
 
+/* AVATAR */
+
 .avatar{
-  width:68px;
-  height:68px;
+  width:72px;
+  height:72px;
   border-radius:50%;
   object-fit:cover;
 
-  border:2px solid rgba(139,92,246,.55);
+  border:2px solid rgba(255,255,255,.18);
 
   box-shadow:
-  0 0 25px rgba(139,92,246,.4);
+  0 0 18px rgba(255,255,255,.12);
 }
+
+/* NAME */
 
 .title{
   font-family:Orbitron;
-  font-size:20px;
+  font-size:22px;
   font-weight:700;
+  letter-spacing:2px;
+  color:#fff;
 
-  background:linear-gradient(90deg,#ffffff,#c4b5fd,#93c5fd);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
+  text-shadow:
+  0 0 10px rgba(255,255,255,.25);
 }
 
 .sub{
-  opacity:.75;
+  margin-top:5px;
   font-size:13px;
-  margin-top:4px;
+  opacity:.78;
 }
 
 .loc{
-  opacity:.55;
+  margin-top:4px;
   font-size:11px;
-  margin-top:5px;
-  letter-spacing:1px;
+  opacity:.52;
 }
 
-/* ===== SOCIALS ===== */
+/* LINKS */
 
 .links{
   display:flex;
   gap:10px;
-  margin-top:12px;
   flex-wrap:wrap;
+  margin-top:12px;
 }
 
 .links a{
@@ -171,48 +208,44 @@ video{
   align-items:center;
   gap:6px;
 
-  text-decoration:none;
-  color:white;
-
   padding:8px 12px;
 
   border-radius:14px;
 
   background:rgba(255,255,255,.05);
 
-  border:1px solid rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.08);
 
-  transition:.3s;
-
+  color:#fff;
+  text-decoration:none;
   font-size:12px;
+  transition:.25s;
 }
 
 .links a:hover{
-  transform:translateY(-3px);
-  background:rgba(255,255,255,.1);
-  box-shadow:0 0 18px rgba(255,255,255,.12);
+  transform:translateY(-2px);
+  background:rgba(255,255,255,.11);
+  border-color:rgba(255,255,255,.18);
 }
 
 .links img{
-  width:15px;
+  width:16px;
 }
 
-/* ===== SERVER CARD ===== */
+/* SERVER */
 
 .server{
   display:flex;
   align-items:center;
   justify-content:space-between;
-
   gap:14px;
 
-  padding:16px;
-
+  padding:15px;
   border-radius:22px;
 
-  background:rgba(255,255,255,.04);
+  background:rgba(255,255,255,.045);
 
-  border:1px solid rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.07);
 }
 
 .server-left{
@@ -222,172 +255,184 @@ video{
 }
 
 .server img{
-  width:48px;
-  height:48px;
+  width:46px;
+  height:46px;
   border-radius:14px;
   object-fit:cover;
-
-  border:1px solid rgba(255,255,255,.08);
 }
 
 .server-title{
-  font-weight:600;
   font-size:15px;
+  font-weight:600;
 }
 
 .server-sub{
-  opacity:.6;
-  font-size:12px;
-  margin-top:2px;
+  margin-top:3px;
+  font-size:11px;
+  opacity:.55;
 }
 
-/* ===== JOIN BUTTON ===== */
+/* JOIN BUTTON */
 
 .join{
   position:relative;
 
+  padding:10px 18px;
+
+  border-radius:14px;
+
   text-decoration:none;
-  color:white;
+  color:#fff;
 
-  font-size:13px;
+  font-size:12px;
   font-weight:600;
-
-  padding:12px 18px;
-
-  border-radius:16px;
+  letter-spacing:1px;
 
   overflow:hidden;
 
-  background:linear-gradient(135deg,#7c3aed,#2563eb);
+  background:
+  linear-gradient(
+    135deg,
+    #ffffff22,
+    #ffffff10
+  );
 
-  transition:.35s;
+  border:1px solid rgba(255,255,255,.16);
 
-  box-shadow:
-  0 0 25px rgba(99,102,241,.35);
+  backdrop-filter:blur(10px);
+
+  transition:.3s;
 }
 
 .join::before{
   content:'';
   position:absolute;
   top:0;
-  left:-120%;
+  left:-100%;
   width:100%;
   height:100%;
 
-  background:linear-gradient(
-    120deg,
+  background:
+  linear-gradient(
+    90deg,
     transparent,
-    rgba(255,255,255,.4),
+    rgba(255,255,255,.25),
     transparent
   );
 
-  transition:.6s;
+  transition:.5s;
 }
 
 .join:hover::before{
-  left:120%;
+  left:100%;
 }
 
 .join:hover{
-  transform:translateY(-3px) scale(1.03);
+  transform:translateY(-2px) scale(1.03);
 
   box-shadow:
-  0 0 35px rgba(99,102,241,.6);
+  0 0 20px rgba(255,255,255,.15);
 }
 
-/* ===== GLOW ===== */
+/* CUSTOM MUSIC BUTTON */
 
-.glow{
-  position:fixed;
-  width:320px;
-  height:320px;
+.music-btn{
+  margin-top:14px;
 
-  border-radius:50%;
+  width:100%;
 
-  background:
-  radial-gradient(circle,
-  rgba(124,58,237,.22),
-  transparent 70%);
+  padding:13px;
 
-  pointer-events:none;
+  border:none;
+  outline:none;
 
-  filter:blur(35px);
+  border-radius:18px;
 
-  z-index:0;
+  background:rgba(255,255,255,.06);
+
+  border:1px solid rgba(255,255,255,.09);
+
+  color:#fff;
+
+  font-size:13px;
+  font-weight:600;
+
+  cursor:pointer;
+
+  transition:.25s;
 }
 
-/* ===== PARTICLES ===== */
+.music-btn:hover{
+  background:rgba(255,255,255,.12);
+}
+
+/* PARTICLES */
 
 canvas{
   position:fixed;
   inset:0;
   pointer-events:none;
-  z-index:2;
+  z-index:-1;
 }
 
-/* ===== MOBILE ===== */
+/* MOBILE */
 
 @media(max-width:500px){
 
   .container{
     width:94%;
-    padding:14px;
+    padding:16px;
   }
 
-  .card{
-    flex-direction:column;
-    align-items:center;
-    text-align:center;
+  .title{
+    font-size:20px;
   }
 
-  .links{
-    justify-content:center;
-  }
-
-  .server{
-    flex-direction:column;
-    align-items:flex-start;
-  }
-
-  .join{
-    width:100%;
-    text-align:center;
+  .avatar{
+    width:66px;
+    height:66px;
   }
 
 }
-
 </style>
 </head>
+
 <body>
 
-<!-- ENTER SCREEN -->
+<!-- ENTRY SCREEN -->
 
 <div id="overlay">
   <h1>ANSHHH</h1>
-  <p>TAP TO ENTER</p>
+  <p>tap to enter</p>
 </div>
 
-<!-- BACKGROUND VIDEO -->
+<!-- VIDEO -->
 
-<video id="bg" autoplay muted loop playsinline>
-  <source src="video.mp4" type="video/mp4">
+<video id="bg" loop muted playsinline>
+  <source src="video.mp4" type="video/mp4" />
 </video>
 
 <div class="bg-overlay"></div>
 
+<!-- MUSIC -->
+
+<audio id="music" loop>
+  <source src="song.mp3" type="audio/mp3" />
+</audio>
+
 <!-- MAIN -->
 
-<div class="container" id="wrap">
+<div class="container">
 
   <!-- PROFILE -->
 
   <div class="card">
 
-    <img src="profile.jpeg" class="avatar">
+    <img src="profile.jpeg" class="avatar" />
 
     <div>
 
-      <div class="title">Anshh</div>
+      <div class="title">Anshhh</div>
 
       <div class="sub">
         Developer • Event Manager
@@ -430,11 +475,11 @@ canvas{
 
       <div>
         <div class="server-title">
-          AfterDark Society
+          afterdark society
         </div>
 
         <div class="server-sub">
-          Private Community
+          private community
         </div>
       </div>
 
@@ -446,31 +491,40 @@ canvas{
 
   </div>
 
+  <!-- MUSIC BUTTON -->
+
+  <button class="music-btn" id="musicToggle">
+    ♫ Pause Music
+  </button>
+
 </div>
-
-<!-- GLOW -->
-
-<div class="glow" id="glow"></div>
 
 <!-- PARTICLES -->
 
 <canvas id="c"></canvas>
 
 <script>
-
-/* ===== ENTER ===== */
-
 const overlay = document.getElementById('overlay');
+const music = document.getElementById('music');
+const video = document.getElementById('bg');
+const musicBtn = document.getElementById('musicToggle');
 
-overlay.onclick = () => {
+let playing = true;
 
-  gsap.to('#overlay',{
-    opacity:0,
-    duration:.7,
-    onComplete:()=>{
-      overlay.style.display='none';
-    }
-  });
+/* ENTER */
+
+overlay.onclick = async () => {
+
+  overlay.style.display = 'none';
+
+  try{
+    await video.play();
+  }catch(e){}
+
+  try{
+    music.volume = 0.6;
+    await music.play();
+  }catch(e){}
 
   gsap.from('.container',{
     opacity:0,
@@ -479,25 +533,24 @@ overlay.onclick = () => {
     ease:'power3.out'
   });
 
-};
+}
 
-/* ===== GLOW FOLLOW ===== */
+/* MUSIC TOGGLE */
 
-const glow = document.getElementById('glow');
+musicBtn.onclick = () => {
 
-window.addEventListener('mousemove',e=>{
-  glow.style.left = e.clientX - 160 + 'px';
-  glow.style.top = e.clientY - 160 + 'px';
-});
+  if(playing){
+    music.pause();
+    musicBtn.innerHTML = '♫ Play Music';
+  }else{
+    music.play();
+    musicBtn.innerHTML = '♫ Pause Music';
+  }
 
-window.addEventListener('touchmove',e=>{
-  let t = e.touches[0];
+  playing = !playing;
+}
 
-  glow.style.left = t.clientX - 160 + 'px';
-  glow.style.top = t.clientY - 160 + 'px';
-});
-
-/* ===== PARTICLES ===== */
+/* PARTICLES */
 
 const canvas = document.getElementById('c');
 const ctx = canvas.getContext('2d');
@@ -511,44 +564,58 @@ resize();
 
 window.addEventListener('resize',resize);
 
-let particles = [];
+const particles = [];
 
 window.addEventListener('mousemove',e=>{
+  for(let i=0;i<2;i++){
+    particles.push({
+      x:e.clientX,
+      y:e.clientY,
+      size:Math.random()*2+1,
+      life:40
+    });
+  }
+});
+
+window.addEventListener('touchmove',e=>{
+  const t = e.touches[0];
 
   particles.push({
-    x:e.clientX,
-    y:e.clientY,
-    life:35
+    x:t.clientX,
+    y:t.clientY,
+    size:2,
+    life:40
   });
-
 });
 
 function animate(){
 
   ctx.clearRect(0,0,canvas.width,canvas.height);
 
-  particles.forEach((p,i)=>{
+  for(let i=particles.length-1;i>=0;i--){
 
-    ctx.fillStyle=`rgba(255,255,255,${p.life/35})`;
+    const p = particles[i];
 
     ctx.beginPath();
-    ctx.arc(p.x,p.y,1.6,0,Math.PI*2);
+
+    ctx.fillStyle = `rgba(255,255,255,${p.life/40})`;
+
+    ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+
     ctx.fill();
 
     p.life--;
+    p.y -= .3;
 
-    if(p.life<=0){
+    if(p.life <= 0){
       particles.splice(i,1);
     }
-
-  });
+  }
 
   requestAnimationFrame(animate);
-
 }
 
 animate();
-
 </script>
 
 </body>
